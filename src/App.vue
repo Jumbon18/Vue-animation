@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container text-center pt-5">
+    <button class="btn btn-success" @click="add">Add</button>
+    <button class="btn btn-danger" @click="remove">Remove</button>
+    <hr>
+    <transition-group tag="ul" class="list-group width300" name="ma">
+
+      <li class="list-group-item" v-for="(item,i) of items" :key="i">{{item}}</li>
+    </transition-group>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  data:()=>({
+      items:[1,2,3,4,5],
+    nextNum:6
+  }),
+  methods:{
+    add(){
+      this.items.splice(this.getIndex(),0,this.nextNum++)
+    },
+    remove(){
+      this.items.splice(this.getIndex(),1);
+    },
+    getIndex(){
+      return Math.floor(Math.random() * this.items.length)
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.width300{
+  width: 300px;
+  margin: 0 auto;
 }
+  .ma-enter-active,.ma-leave-active{
+    transition: 1s all;
+  }
+  .ma-enter,.ma-leave-to{
+    transform: translateX(-100px);
+  }
+.ma-leave{
+  opacity:1 ;
+}
+  .ma-leave-to{
+    opacity: 0;
+  }
 </style>
